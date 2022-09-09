@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="10"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/friend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:enabled="false"
+            android:text="friend" />
+
+        <Button
+            android:id="@+id/connect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="connect" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/msg_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="80" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width ="match_parent"
+        android:layout_height = "wrap_content"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:max="100"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/pic"
+            android:layout_width="69dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="5"
+            android:background="#d8e0e8"
+            android:text="file" />
+
+        <EditText
+            android:id="@+id/input_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="90"
+            android:hint="type something"
+            android:maxLines="2"/>
+
+        <Button
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_weight="5"
+            android:background="#d8e0e8"
+            android:text="send" />
+    </LinearLayout>
+</LinearLayout>
