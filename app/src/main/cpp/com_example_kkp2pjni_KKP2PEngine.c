@@ -266,3 +266,48 @@ JNIEXPORT void JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1close_1f
   (JNIEnv * env, jclass jniClass, jint fd) {
     return kkp2p_close_fd(fd);
 }
+
+JNIEXPORT jlong JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1start_1proxy
+(JNIEnv * env, jclass jniClass, jlong engine, jstring ip, jint port, jobject connCtx) {
+    kkp2p_engine_t* p2pEngine = (kkp2p_engine_t*)(engine);
+    kkp2p_connect_ctx_t ctx;
+    memset(&ctx, 0, sizeof(kkp2p_connect_ctx_t));
+
+    jclass jclsCtx = (*env)->GetObjectClass(env,connCtx);
+    jfieldID fid = (*env)->GetFieldID(env,jclsCtx, "peer_id", "Ljava/lang/String;");
+    jstring jstrPeerId = (jstring)((*env)->GetObjectField(env,connCtx, fid));
+    const char* szPeerId = (*env)->GetStringUTFChars(env,jstrPeerId, 0);
+    strncpy(ctx.peer_id, szPeerId, sizeof(ctx.peer_id));
+
+    fid = (*env)->GetFieldID(env,jclsCtx, "connect_mode", "I");
+    ctx.connect_mode =  (*env)->GetIntField(env,connCtx, fid);
+
+    fid = (*env)->GetFieldID(env,jclsCtx, "encrypt_data", "I");
+    ctx.encrypt_data =  (*env)->GetIntField(env,connCtx, fid);
+
+    fid = (*env)->GetFieldID(env,jclsCtx, "time_out", "I");
+    ctx.timeout =  (*env)->GetIntField(env,connCtx, fid);
+
+    fid = (*env)->GetFieldID(env,jclsCtx, "connect_desc", "I");
+    ctx.connect_desc =  (*env)->GetIntField(env,connCtx, fid);
+
+    ctx.func = NULL;
+    ctx.func_param = NULL;
+
+    const char* proxyIp = ((*env))->GetStringUTFChars(env,ip, 0);
+    unsigned short proxyPort = port;
+
+    unsigned int proxyId = 0 ;
+    int result = kkp2p_start_proxy(p2pEngine, proxyIp, proxyPort, &ctx,&proxyId);
+    (*env)->DeleteLocalRef(env,jclsCtx);
+    if (proxyId > 0) {
+        return proxyId;
+    }
+    return 0;
+}
+
+JNIEXPORT void JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1stop_1proxy
+        (JNIEnv *, jclass, jlong engine, jlong proxyId) {
+    kkp2p_engine_t* p2pEngine = (kkp2p_engine_t*)(engine);
+    kkp2p_stop_proxy(p2pEngine,proxyId);
+}

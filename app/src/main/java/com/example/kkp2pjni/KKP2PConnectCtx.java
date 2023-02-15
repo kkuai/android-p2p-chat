@@ -5,6 +5,7 @@ public class KKP2PConnectCtx {
     public int  connect_mode;
     public int encrypt_data;
     public int time_out;
+    public int connect_desc;
     KKP2PConnectCb func;
     Object func_param;
     KKP2PConnectCtx() {
@@ -14,5 +15,6 @@ public class KKP2PConnectCtx {
         time_out = 0;
         func = null;
         func_param = null;
+        connect_desc = 0 ;
     }
 }

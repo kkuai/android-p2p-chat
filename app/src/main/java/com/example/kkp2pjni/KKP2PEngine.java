@@ -97,4 +97,6 @@ public class KKP2PEngine {
     public static native int nv_kkp2p_write(int fd, byte[] buff, int len, int timeout);
     public static native void nv_kkp2p_close_channel(long engine, long channel_id);
     public static native void nv_kkp2p_close_fd(int fd);
+    public static native long nv_kkp2p_start_proxy(long engine, String ip, int port, KKP2PConnectCtx ctx);
+    public static native void nv_kkp2p_stop_proxy(long engine, long proxyId);
 }

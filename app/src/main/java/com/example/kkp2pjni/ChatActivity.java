@@ -450,6 +450,7 @@ public class ChatActivity<Unit> extends AppCompatActivity {
             msg.sendToTarget();
         } else if (tag == 2) {
             // recv file,discard it
+            Log.d("KKP2P","receive file len:"+length);
             long startMs = System.currentTimeMillis();
             int  totalReceived = 0;
             byte[] byteArray = new byte[1024];

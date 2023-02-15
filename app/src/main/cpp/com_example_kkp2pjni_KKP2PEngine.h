@@ -66,7 +66,7 @@ JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1listen_1
 /*
  * Class:     com_example_kkp2pjni_KKP2PEngine
  * Method:    nv_kkp2p_accept
- * Signature: (JIILcom/example/kkp2pjni/KKP2PChannel;)I
+ * Signature: (JILcom/example/kkp2pjni/KKP2PChannel;)I
  */
 JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1accept
   (JNIEnv *, jclass, jlong, jint, jobject);
@@ -93,7 +93,7 @@ JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1lan_1sea
  * Signature: (I[BII)I
  */
 JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1read
-  (JNIEnv *, jclass, jint, jbyteArray , jint, jint);
+  (JNIEnv *, jclass, jint, jbyteArray, jint, jint);
 
 /*
  * Class:     com_example_kkp2pjni_KKP2PEngine
@@ -106,7 +106,7 @@ JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1write
 /*
  * Class:     com_example_kkp2pjni_KKP2PEngine
  * Method:    nv_kkp2p_close_channel
- * Signature: (JJ)I
+ * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1close_1channel
   (JNIEnv *, jclass, jlong, jlong);
@@ -114,10 +114,26 @@ JNIEXPORT void JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1close_1c
 /*
  * Class:     com_example_kkp2pjni_KKP2PEngine
  * Method:    nv_kkp2p_close_fd
- * Signature: (I)I
+ * Signature: (I)V
  */
 JNIEXPORT void JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1close_1fd
   (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     com_example_kkp2pjni_KKP2PEngine
+ * Method:    nv_kkp2p_start_proxy
+ * Signature: (JLjava/lang/String;ILcom/example/kkp2pjni/KKP2PConnectCtx;)J
+ */
+JNIEXPORT jlong JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1start_1proxy
+  (JNIEnv *, jclass, jlong, jstring, jint, jobject);
+
+/*
+ * Class:     com_example_kkp2pjni_KKP2PEngine
+ * Method:    nv_kkp2p_stop_proxy
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1stop_1proxy
+  (JNIEnv *, jclass, jlong, jlong);
 
 #ifdef __cplusplus
 }
