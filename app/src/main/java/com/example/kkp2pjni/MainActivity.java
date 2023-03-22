@@ -112,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
                     lanSearch = true;
                 }
 
+                // crate a like tcp channel
+                connect_ctx.channel_type = 0;
+
                 // get src peer id and dest peerId
                 String strAccount = account_info.getSelectedItem().toString();
                 String[] strAccountArray = strAccount.split("\\|");

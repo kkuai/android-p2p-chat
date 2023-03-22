@@ -29,6 +29,16 @@ JNIEXPORT jlong JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1engine_
     jint jLanPort = (*env)->GetIntField(env,config, fid);
     engineConf.lan_search_port = jLanPort;
 
+    // get log path
+    fid = (*env)->GetFieldID(env,jcls, "log_path", "Ljava/lang/String;");
+    jstring jstrPath = (jstring)((*env)->GetObjectField(env,config, fid));
+    if (jstrPath) {
+        const char* szPath = (*env)->GetStringUTFChars(env,jstrPath, 0);
+        jsize pathLen = (*env)->GetStringUTFLength(env, jstrDomain);
+        engineConf.log_path = (char *) calloc(1, pathLen + 1);
+        memcpy(engineConf.log_path, szPath, pathLen);
+    }
+
     // log size
     fid = (*env)->GetFieldID(env,jcls, "max_log_size", "I");
     jint jLogSize = (*env)->GetIntField(env,config, fid);
@@ -38,6 +48,10 @@ JNIEXPORT jlong JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1engine_
     kkp2p_engine_t* p2pEngine = kkp2p_engine_init(&engineConf, timeout);
     free(engineConf.login_domain);
     (*env)->DeleteLocalRef(env,jcls);
+
+    if (engineConf.log_path) {
+        free(engineConf.log_path);
+    }
 
     return (jlong)p2pEngine;
 }
@@ -296,9 +310,11 @@ JNIEXPORT jlong JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1start_1
 
     const char* proxyIp = ((*env))->GetStringUTFChars(env,ip, 0);
     unsigned short proxyPort = port;
-
     unsigned int proxyId = 0 ;
+
     int result = kkp2p_start_proxy(p2pEngine, proxyIp, proxyPort, &ctx,&proxyId);
+    __android_log_print(ANDROID_LOG_ERROR, "KKP2P", "kkp2p_start_proxy %s:%d %s,%d,%d,proxy id:%u", proxyIp,proxyPort,ctx.peer_id,ctx.timeout,ctx.connect_mode,proxyId);
+
     (*env)->DeleteLocalRef(env,jclsCtx);
     if (proxyId > 0) {
         return proxyId;
@@ -307,7 +323,7 @@ JNIEXPORT jlong JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1start_1
 }
 
 JNIEXPORT void JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1stop_1proxy
-        (JNIEnv *, jclass, jlong engine, jlong proxyId) {
+        (JNIEnv * env, jclass jniClass, jlong engine, jlong proxyId) {
     kkp2p_engine_t* p2pEngine = (kkp2p_engine_t*)(engine);
     kkp2p_stop_proxy(p2pEngine,proxyId);
 }
