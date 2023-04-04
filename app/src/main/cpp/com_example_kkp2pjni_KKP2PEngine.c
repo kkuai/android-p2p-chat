@@ -122,6 +122,9 @@ JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1accept
     jstr = (*env)->NewStringUTF(env,channel.peer_id);
     (*env)->SetObjectField(env,jChannel, fid, jstr);
 
+    fid = (*env)->GetFieldID(env,jcls, "channel_type", "I");
+    (*env)->SetIntField(env,jChannel,fid,channel.channel_type);
+
     fid = (*env)->GetFieldID(env,jcls, "transmit_mode", "I");
     (*env)->SetIntField(env,jChannel,fid,channel.transmit_mode);
 
@@ -152,6 +155,9 @@ JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1connect
     jstring jstrPeerId = (jstring)((*env)->GetObjectField(env,connCtx, fid));
     const char* szPeerId = (*env)->GetStringUTFChars(env,jstrPeerId, 0);
     strncpy(ctx.peer_id, szPeerId, sizeof(ctx.peer_id));
+
+    fid = (*env)->GetFieldID(env,jclsCtx, "channel_type", "I");
+    ctx.channel_type =  (*env)->GetIntField(env,connCtx, fid);
 
     fid = (*env)->GetFieldID(env,jclsCtx, "connect_mode", "I");
     ctx.connect_mode =  (*env)->GetIntField(env,connCtx, fid);
