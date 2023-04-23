@@ -134,6 +134,12 @@ JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1accept
     fid = (*env)->GetFieldID(env,jcls, "channel_id", "J");
     (*env)->SetLongField(env,jChannel,fid,(long)channel.channel_id);
 
+    fid = (*env)->GetFieldID(env,jcls, "is_ipv6_p2p", "I");
+    (*env)->SetIntField(env,jChannel,fid,channel.is_ipv6_p2p);
+
+    fid = (*env)->GetFieldID(env,jcls, "connect_desc", "I");
+    (*env)->SetIntField(env,jChannel,fid,channel.connect_desc);
+
     fid = (*env)->GetFieldID(env,jcls, "fd", "I");
     (*env)->SetIntField(env,jChannel,fid,channel.fd);
 
@@ -193,6 +199,12 @@ JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1connect
 
     fid = (*env)->GetFieldID(env,jcls, "channel_id", "J");
     (*env)->SetLongField(env,jchannel,fid,(long)channel.channel_id);
+
+    fid = (*env)->GetFieldID(env,jcls, "connect_desc", "I");
+    (*env)->SetIntField(env,jchannel,fid,channel.connect_desc);
+
+    fid = (*env)->GetFieldID(env,jcls, "is_ipv6_p2p", "I");
+    (*env)->SetIntField(env,jchannel,fid,channel.is_ipv6_p2p);
 
     fid = (*env)->GetFieldID(env,jcls, "fd", "I");
     (*env)->SetIntField(env,jchannel,fid,channel.fd);

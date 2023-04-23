@@ -132,7 +132,11 @@ public class ChatActivity<Unit> extends AppCompatActivity {
                 }
                 Button connetBT = (Button) findViewById(R.id.connect);
                 if (clientChannel.transmit_mode == 1) {
-                    connetBT.setText("p2p");
+                    if (clientChannel.is_ipv6_p2p == 1) {
+                        connetBT.setText("p2p(ipv6)");
+                    } else {
+                        connetBT.setText("p2p(ipv4)");
+                    }
                 } else {
                     connetBT.setText("relay");
                 }
@@ -508,7 +512,11 @@ public class ChatActivity<Unit> extends AppCompatActivity {
                     Log.d("KKP2P", strLog);
                     String strDesc = new String("");
                     if (acceptChannel.transmit_mode == 1) {
-                        strDesc = "p2p(accepted)";
+                        if (acceptChannel.is_ipv6_p2p ==1 ) {
+                            strDesc = "p2p(ipv6 accepted)";
+                        } else {
+                            strDesc = "p2p(ipv4 accepted)";
+                        }
                     } else if (acceptChannel.transmit_mode == 2) {
                         strDesc = "relay(accepted)";
                     }
