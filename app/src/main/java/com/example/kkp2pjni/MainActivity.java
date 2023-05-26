@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         String strAccount="kkuai-ipc-00001|WtXmjG,kkuai-ipc-00002|OBq26M";
         String[] arrAccount = strAccount.split(",");
 
+        final String filePath = Environment.getExternalStorageDirectory().getAbsolutePath();
         ArrayAdapter<String> adapterAccount;
         adapterAccount = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, arrAccount);
         adapterAccount.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -79,11 +81,12 @@ public class MainActivity extends AppCompatActivity {
         Button bt = findViewById(R.id.button);
         bt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Log.e("KKP2P","app file path:" + filePath);
                 KKP2PConfig config = new KKP2PConfig();
                 config.login_domain = login_domain.getText().toString();
                 config.login_port =  Integer.parseInt(login_port.getText().toString());
                 config.lan_search_port = Integer.parseInt(lan_port.getText().toString());
-                config.log_path = null;
+                config.log_path = filePath + "/" + "download" + "/";
                 config.max_log_size = 1024*1024;
                 if (p2pHandle != 0) {
                     p2pEngine.nv_kkp2p_engine_destroy(p2pHandle);
@@ -96,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
                     toast.show();
                     return;
                 }
+
+                p2pEngine.nv_kkp2p_switch_log_level(p2pHandle,4);
 
                 // get connect param ctx
                 Boolean lanSearch = new Boolean("false");
