@@ -67,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
         // set select account_info
         account_info = (Spinner) findViewById(R.id.spinnerAccount);
-        String strAccount="kkuai-ipc-00001|WtXmjG,kkuai-ipc-00002|OBq26M";
+        //String strAccount="kkuai-ipc-00001|WtXmjG,kkuai-ipc-00002|OBq26M";
+        String strAccount="test-00018|pSJ9eF,kkuai-ipc-00070|N4OGpw";
+
         String[] arrAccount = strAccount.split(",");
 
         final String filePath = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -125,11 +127,21 @@ public class MainActivity extends AppCompatActivity {
                 String[] strAccountArray = strAccount.split("\\|");
                 src_peer_id =  strAccountArray[0];
                 src_peer_key = strAccountArray[1];
+
+                /*
                 if (src_peer_id.equals("kkuai-ipc-00001")) {
                     connect_ctx.peer_id = "kkuai-ipc-00002";
                 } else {
                     connect_ctx.peer_id = "kkuai-ipc-00001";
                 }
+                */
+
+                if (src_peer_id.equals("test-00018")) {
+                    connect_ctx.peer_id = "kkuai-ipc-00070";
+                } else {
+                    connect_ctx.peer_id = "test-00018";
+                }
+
                 connect_ctx.encrypt_data = 0;
                 connect_ctx.time_out = 5000;
                 connect_ctx.func = null;

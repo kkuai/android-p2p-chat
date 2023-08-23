@@ -34,7 +34,7 @@ JNIEXPORT jlong JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1engine_
     jstring jstrPath = (jstring)((*env)->GetObjectField(env,config, fid));
     if (jstrPath) {
         const char* szPath = (*env)->GetStringUTFChars(env,jstrPath, 0);
-        jsize pathLen = (*env)->GetStringUTFLength(env, jstrDomain);
+        jsize pathLen = (*env)->GetStringUTFLength(env, jstrPath);
         engineConf.log_path = (char *) calloc(1, pathLen + 1);
         memcpy(engineConf.log_path, szPath, pathLen);
     }
