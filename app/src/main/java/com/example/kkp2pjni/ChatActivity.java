@@ -113,19 +113,23 @@ public class ChatActivity<Unit> extends AppCompatActivity {
             public void onClick(View v) {
                 //actively establish new connections
                 int result = -1;
+                long startT = System.currentTimeMillis();
                 if (lanSearch) {
                     result = p2pEngine.nv_kkp2p_lan_search(p2pHandle, connect_ctx, clientChannel);
                 } else {
                     result = p2pEngine.nv_kkp2p_connect(p2pHandle, connect_ctx, clientChannel);
                 }
+                long endT = System.currentTimeMillis();
+                long cost = endT-startT;
+
                 if (result < 0) {
-                    Toast toast = Toast.makeText(ChatActivity.this, "kkp2p connect error",
+                    Toast toast = Toast.makeText(ChatActivity.this, "kkp2p connect error(delay:"+cost+"ms)",
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER,0,0);
                     toast.show();
                     return;
                 } else {
-                    Toast toast = Toast.makeText(ChatActivity.this, "kkp2p connect success",
+                    Toast toast = Toast.makeText(ChatActivity.this, "kkp2p connect success(delay:"+cost+"ms)",
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER,0,0);
                     toast.show();

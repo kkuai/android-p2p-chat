@@ -174,6 +174,9 @@ JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1connect
     fid = (*env)->GetFieldID(env,jclsCtx, "time_out", "I");
     ctx.timeout =  (*env)->GetIntField(env,connCtx, fid);
 
+    fid = (*env)->GetFieldID(env,jclsCtx, "connect_desc", "I");
+    ctx.connect_desc =  (*env)->GetIntField(env,connCtx, fid);
+
     // to do ?
     ctx.func = NULL;
     ctx.func_param = NULL;
@@ -237,6 +240,10 @@ JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1lan_1sea
     
     fid = (*env)->GetFieldID(env,jclsCtx, "time_out", "I");
     ctx.timeout =  (*env)->GetIntField(env,connCtx, fid);
+
+    fid = (*env)->GetFieldID(env,jclsCtx, "connect_desc", "I");
+    ctx.connect_desc =  (*env)->GetIntField(env,connCtx, fid);
+
     ctx.func = NULL;
     ctx.func_param = NULL;
     
@@ -260,6 +267,9 @@ JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1lan_1sea
     
     fid = (*env)->GetFieldID(env,jcls, "channel_id", "J");
     (*env)->SetLongField(env,jchannel,fid,(long)channel.channel_id);
+
+    fid = (*env)->GetFieldID(env,jcls, "connect_desc", "I");
+    (*env)->SetIntField(env,jchannel,fid,channel.connect_desc);
 
     fid = (*env)->GetFieldID(env,jcls, "fd", "I");
     (*env)->SetIntField(env,jchannel,fid,channel.fd);
