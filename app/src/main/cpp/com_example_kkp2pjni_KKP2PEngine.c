@@ -29,29 +29,10 @@ JNIEXPORT jlong JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1engine_
     jint jLanPort = (*env)->GetIntField(env,config, fid);
     engineConf.lan_search_port = jLanPort;
 
-    // get log path
-    fid = (*env)->GetFieldID(env,jcls, "log_path", "Ljava/lang/String;");
-    jstring jstrPath = (jstring)((*env)->GetObjectField(env,config, fid));
-    if (jstrPath) {
-        const char* szPath = (*env)->GetStringUTFChars(env,jstrPath, 0);
-        jsize pathLen = (*env)->GetStringUTFLength(env, jstrPath);
-        engineConf.log_path = (char *) calloc(1, pathLen + 1);
-        memcpy(engineConf.log_path, szPath, pathLen);
-    }
-
-    // log size
-    fid = (*env)->GetFieldID(env,jcls, "max_log_size", "I");
-    jint jLogSize = (*env)->GetIntField(env,config, fid);
-    engineConf.max_log_size = jLogSize;
-
     // call kkp2p_engine_init
     kkp2p_engine_t* p2pEngine = kkp2p_engine_init(&engineConf, timeout);
     free(engineConf.login_domain);
     (*env)->DeleteLocalRef(env,jcls);
-
-    if (engineConf.log_path) {
-        free(engineConf.log_path);
-    }
 
     return (jlong)p2pEngine;
 }
@@ -62,12 +43,6 @@ JNIEXPORT void JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1engine_1
         kkp2p_engine_t* p2pEngine = (kkp2p_engine_t*)(engine);
         kkp2p_engine_destroy(p2pEngine);
     }
-}
-
-JNIEXPORT void JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1switch_1log_1level
-  (JNIEnv * env, jclass jniClass, jlong engine, jint level) {
-    kkp2p_engine_t* p2pEngine = (kkp2p_engine_t*)(engine);
-    kkp2p_switch_log_level(p2pEngine, level);
 }
 
 JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1get_1domainip
@@ -181,7 +156,6 @@ JNIEXPORT jint JNICALL Java_com_example_kkp2pjni_KKP2PEngine_nv_1kkp2p_1connect
     ctx.func = NULL;
     ctx.func_param = NULL;
 
-    kkp2p_switch_log_level(p2pEngine,4);
     jint result = kkp2p_connect(p2pEngine, &ctx, &channel);
 
     // set channel

@@ -86,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 config.login_domain = login_domain.getText().toString();
                 config.login_port =  Integer.parseInt(login_port.getText().toString());
                 config.lan_search_port = Integer.parseInt(lan_port.getText().toString());
-                config.log_path = filePath + "/" + "download" + "/";
-                config.max_log_size = 1024*1024;
                 if (p2pHandle != 0) {
                     p2pEngine.nv_kkp2p_engine_destroy(p2pHandle);
                 }
@@ -99,8 +97,6 @@ public class MainActivity extends AppCompatActivity {
                     toast.show();
                     return;
                 }
-
-                p2pEngine.nv_kkp2p_switch_log_level(p2pHandle,4);
 
                 // get connect param ctx
                 Boolean lanSearch = new Boolean("false");

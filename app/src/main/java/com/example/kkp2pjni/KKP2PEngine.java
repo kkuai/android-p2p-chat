@@ -85,7 +85,6 @@ public class KKP2PEngine {
 
     public static native long nv_kkp2p_engine_init(KKP2PConfig config, int timeOut);
     public static native void nv_kkp2p_engine_destroy(long obj);
-    public static native void nv_kkp2p_switch_log_level(long obj, int level);
     public static native int nv_kkp2p_get_domainip(long obj, String[] arr);
     public static native int nv_kkp2p_join_net(long obj, String peerId, String secret);
     public static native int nv_kkp2p_join_lan(long obj, String peerId);
